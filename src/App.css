@@ -1,0 +1,179 @@
+* {
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  box-sizing: border-box;
+}
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body,
+h1,
+h2,
+p,
+ul,
+li,
+a {
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  font-family: "Raleway", Helvetiva, Arial, sans-serif;
+  color: #222222;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Header */
+
+.menu-bg {
+  background: #1e90ff;
+}
+
+.menu {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 15px 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menu a {
+  color: white;
+}
+
+.menu-logo a {
+  font-size: 2.25em;
+  font-weight: bold;
+  margin: 0 10px;
+}
+
+.menu-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.menu-nav a {
+  font-size: 1.25em;
+  display: block;
+  padding: 10px;
+}
+
+/* Títulos */
+
+.page-title {
+  font-size: 3em;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 60px 10px;
+  color: #1e90ff;
+}
+
+/* Página principal */
+
+.welcome-box {
+  border: 2px solid #1e90ff;
+  max-width: 960px;
+  margin: 100px auto;
+  padding: 60px 0;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.welcome-box h1 {
+  font-size: 3em;
+  color: #1e90ff;
+}
+
+.welcome-box button {
+  font-size: 1.5em;
+  padding: 10px;
+  margin-top: 50px;
+  background: #fff;
+  border: 1px solid #1e90ff;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  color: #1e90ff;
+}
+
+.welcome-box button:hover {
+  background: #1e90ff;
+  transform: scale(1.1);
+  border: 1px solid #fff;
+  color: #fff;
+}
+
+/* Footer */
+
+.footer {
+  display: flex;
+  background: #1e90ff;
+  height: 48px;
+  align-items: center;
+  margin-bottom: 0;
+}
+
+.footer p {
+  flex: 1;
+  text-align: center;
+  color: white;
+  font-size: 1.25em;
+}
+
+/* Tabelas */
+
+.table-container {
+  max-width: 960px;
+  margin: 0 auto;
+  border: 1px solid #1e90ff;
+  border-collapse: collapse;
+  width: 100em;
+}
+
+thead {
+  background: #1e90ff;
+  border-top: 1px solid #a5a5a5;
+  border-bottom: 1px solid #a5a5a5;
+}
+th {
+  text-align: left;
+  color: white;
+}
+
+th,
+td {
+  padding: 0.2em 0.2em;
+}
+td {
+  text-align: left;
+}
+
+tr:hover {
+  background-color: #85bffaaf;
+  color: white;
+}
+
+.container-list-user {
+  display: flex;
+  flex-direction: row-reverse;
+  margin: 1em 12.7em 1em 0;
+}
