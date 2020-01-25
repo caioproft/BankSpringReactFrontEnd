@@ -32,7 +32,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ## API integration
 
-If you want to use this project with their API, access the repository bellow and fallow the READM.md
+If you want to use this project with their API, access the repository bellow and follow the READM.md
 
 ### https://github.com/caioproft/BankSpringReact
 
