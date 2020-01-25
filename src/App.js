@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import ListUsers from "./components/ListUsers";
 import Welcome from "./pages/Welcome";
 import NewUser from "./components/NewUser";
 import EditUser from "./components/EditUser";
@@ -9,7 +8,9 @@ import Header from "./components/Header";
 import Operations from "./components/Operations";
 import Withdraw from "./components/Withdraw";
 import Deposit from "./components/Deposit";
+import Users from './pages/Users'
 import "./App.css";
+
 
 class App extends React.Component {
   render() {
@@ -21,7 +22,7 @@ class App extends React.Component {
             <Switch>
               <Route path={["/"]} exact component={Welcome} />
               <Route path="/users/new" exact component={NewUser} />
-              <Route path="/users" exact component={ListUsers} />
+              <Route path="/users" exact component={Users} />
               <Route path="/users/edit/:id" exact component={EditUser} />
               <Route
                 path="/users/operations/:id"
