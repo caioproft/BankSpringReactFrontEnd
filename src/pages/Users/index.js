@@ -17,6 +17,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import axios from '../../utils/httpClient';
 import { Container, Delete, Edit, Deposit, Withdraw } from './styles';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
     root: {
@@ -83,9 +84,6 @@ export default function Users() {
                                 <HeaderTableCell>Excluir cliente</HeaderTableCell>
                                 <HeaderTableCell>Depositar</HeaderTableCell>
                                 <HeaderTableCell>Sacar</HeaderTableCell>
-
-
-
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -99,7 +97,9 @@ export default function Users() {
                                             <TableCell align="left">R$ {user.balance}</TableCell>
                                             <TableCell align="left">
                                                 <Button>
-                                                    <Edit />
+                                                    <Link to={`/users/edit/${user.id}`}>
+                                                        <Edit />
+                                                    </Link>
                                                 </Button>
                                             </TableCell>
                                             <TableCell align="left">

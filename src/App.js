@@ -2,13 +2,13 @@ import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Welcome from "./pages/Welcome";
 import NewUser from "./components/NewUser";
-import EditUser from "./components/EditUser";
 import NotFound from "./components/NotFound";
 import Header from "./components/Header";
 import Operations from "./components/Operations";
 import Withdraw from "./components/Withdraw";
 import Deposit from "./components/Deposit";
-import Users from './pages/Users'
+import Users from './pages/Users';
+import EditUser from './pages/EditUser';
 import "./App.css";
 
 
