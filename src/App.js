@@ -1,12 +1,11 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ListUsers from "./components/ListUsers";
-import Welcome from "./components/Welcome";
+import Welcome from "./pages/Welcome";
 import NewUser from "./components/NewUser";
 import EditUser from "./components/EditUser";
 import NotFound from "./components/NotFound";
 import Header from "./components/Header";
-import Footer from "./components/Footer";
 import Operations from "./components/Operations";
 import Withdraw from "./components/Withdraw";
 import Deposit from "./components/Deposit";
@@ -35,7 +34,6 @@ class App extends React.Component {
             </Switch>
           </BrowserRouter>
         </div>
-        <Footer />
       </>
     );
   }
