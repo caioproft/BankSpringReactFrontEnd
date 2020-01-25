@@ -109,12 +109,16 @@ export default function Users() {
                                             </TableCell>
                                             <TableCell align="left">
                                                 <Button>
-                                                    <Deposit />
+                                                    <Link to={`/users/deposit/${user.id}`}>
+                                                        <Deposit />
+                                                    </Link>
                                                 </Button>
                                             </TableCell>
                                             <TableCell align="left">
                                                 <Button>
-                                                    <Withdraw />
+                                                    <Link to={`/users/withdraw/${user.id}`}>
+                                                        <Withdraw />
+                                                    </Link>
                                                 </Button>
                                             </TableCell>
 

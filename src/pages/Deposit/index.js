@@ -1,24 +1,25 @@
 import React from "react";
 import axios from "../../utils/httpClient";
+import { Link } from "react-router-dom";
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import { UserIcon, EmailIcon, Save, Container, Title, FormContainer, Input } from './styles';
+import { Container, Title, FormContainer, Input, Save } from '../EditUser/styles';
+import { Wallet, Money } from './styles'
 import Button from '@material-ui/core/Button';
 
-
-
-class EditUser extends React.Component {
+class Deposit extends React.Component {
     state = {
         user: {
-            name: "",
-            email: ""
+            balance: "",
+            depositValue: "",
+            idAccount: ""
         },
-        errors: {}
+        errors: ""
     };
 
     componentDidMount() {
         axios
-            .get(`/users/${this.retrieveUserId()}`)
+            .get(`/accounts/${this.retrieveUserId()}`)
             .then(({ data }) => {
                 this.setState({
                     user: data
@@ -49,36 +50,37 @@ class EditUser extends React.Component {
         event.preventDefault();
 
         axios
-            .put(`/users/${this.retrieveUserId()}`, this.state.user)
+            .post(`/accounts/deposit/${this.retrieveUserId()}`, this.state.user)
             .then(() => this.props.history.push("/users"))
             .catch(({ response }) => {
+                console.log(response);
                 if (response.status === 400) {
                     this.setState({
                         errors: response.data
                     });
                 }
+                this.setState({
+                    errors: response.data.message
+                });
             });
     };
 
     render() {
         const { user, errors } = this.state;
-
         return (
             <Container>
-                <Title>Alterar dados do cliente</Title>
-
+                <Title>Realizar Depósito</Title>
                 <FormContainer onSubmit={this.handleSubmit}>
                     <Input>
                         <TextField
-                            name="name"
-                            label="Nome do cliente"
-                            value={user.name}
-                            errors={errors["name"]}
-                            onChange={this.handleChange}
+                            name="balance"
+                            label="Saldo do cliente"
+                            value={user.balance}
+                            errors={errors["balance"]}
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
-                                        <UserIcon />
+                                        <Wallet />
                                     </InputAdornment>
                                 ),
                             }}
@@ -87,20 +89,23 @@ class EditUser extends React.Component {
 
                     <Input>
                         <TextField
-                            name="email"
-                            label="E-mail do cliente"
-                            value={user.email}
-                            errors={errors["email"]}
+                            name="depositValue"
+                            label="Valor do depósito"
+                            errors={errors}
                             onChange={this.handleChange}
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
-                                        <EmailIcon />
+                                        <Money />
                                     </InputAdornment>
                                 ),
                             }}
                         />
                     </Input>
+
+                    <Button>
+                        <Link to="/users">Voltar</Link>
+                    </Button>
                     <Button type="submit"
                         variant="contained"
                         startIcon={<Save />}
@@ -112,4 +117,4 @@ class EditUser extends React.Component {
         );
     }
 }
-export default EditUser;
+export default Deposit;
