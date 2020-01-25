@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { TiUser } from 'react-icons/ti';
-import { MdEmail } from 'react-icons/md';
+import { MdEmail, MdDone } from 'react-icons/md';
 import { FiSave } from 'react-icons/fi';
 
 export const UserIcon = styled(TiUser)`
@@ -14,6 +14,11 @@ export const EmailIcon = styled(MdEmail)`
 `;
 
 export const Save = styled(FiSave)`
+    width: 25px;
+    height: 25px;
+`;
+
+export const Done = styled(MdDone)`
     width: 25px;
     height: 25px;
 `;

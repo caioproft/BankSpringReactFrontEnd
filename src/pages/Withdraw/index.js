@@ -3,16 +3,16 @@ import axios from "../../utils/httpClient";
 import { Link } from "react-router-dom";
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import { Container, Title, FormContainer, Input, Done } from '../EditUser/styles';
-import { Wallet, Money } from './styles'
 import Button from '@material-ui/core/Button';
+import { Container, Title, FormContainer, Input, Done } from '../EditUser/styles';
+import { Wallet, Money } from '../Deposit/styles'
 
-class Deposit extends React.Component {
+
+
+class Withdraw extends React.Component {
     state = {
         user: {
-            balance: "",
-            depositValue: "",
-            idAccount: ""
+            balance: ""
         },
         errors: ""
     };
@@ -50,10 +50,10 @@ class Deposit extends React.Component {
         event.preventDefault();
 
         axios
-            .post(`/accounts/deposit/${this.retrieveUserId()}`, this.state.user)
+            .put(`/accounts/withdraw/${this.retrieveUserId()}`, this.state.user)
             .then(() => this.props.history.push("/users"))
             .catch(({ response }) => {
-                console.log(response);
+                console.log(response.data.message);
                 if (response.status === 400) {
                     this.setState({
                         errors: response.data
@@ -69,7 +69,7 @@ class Deposit extends React.Component {
         const { user, errors } = this.state;
         return (
             <Container>
-                <Title>Realizar Depósito</Title>
+                <Title>Realizar Saque</Title>
                 <FormContainer onSubmit={this.handleSubmit}>
                     <Input>
                         <TextField
@@ -89,8 +89,8 @@ class Deposit extends React.Component {
 
                     <Input>
                         <TextField
-                            name="depositValue"
-                            label="Valor do depósito"
+                            name="withdrawValue"
+                            label="Valor do saque"
                             errors={errors}
                             onChange={this.handleChange}
                             InputProps={{
@@ -112,9 +112,10 @@ class Deposit extends React.Component {
                         color="primary">
                         Confirmar
                     </Button>
+
                 </FormContainer>
             </Container>
         );
     }
 }
-export default Deposit;
+export default Withdraw;

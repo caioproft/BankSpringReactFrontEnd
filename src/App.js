@@ -4,10 +4,10 @@ import Welcome from "./pages/Welcome";
 import NewUser from "./components/NewUser";
 import NotFound from "./components/NotFound";
 import Header from "./components/Header";
-import Withdraw from "./components/Withdraw";
 import Users from './pages/Users';
 import EditUser from './pages/EditUser';
-import Deposit from './pages/Deposit'
+import Deposit from './pages/Deposit';
+import Withdraw from './pages/Withdraw';
 import "./App.css";
 
 
