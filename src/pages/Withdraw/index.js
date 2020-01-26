@@ -9,12 +9,6 @@ import { Wallet, Money } from '../Deposit/styles'
 
 
 class Withdraw extends React.Component {
-    // state = {
-    //     user: {
-    //         balance: ""
-    //     },
-    //     errors: ""
-    // };
 
     state = {
         withdrawValue: "",
@@ -44,8 +38,6 @@ class Withdraw extends React.Component {
                 })
         }
     }
-
-    // retrieveUserId = () => this.props.match.params.id;
 
     handleChange = event => {
         let field = event.target.name;
