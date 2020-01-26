@@ -1,6 +1,5 @@
 import React from "react";
 import axios from "../../utils/httpClient";
-import { Link } from "react-router-dom";
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Button from '@material-ui/core/Button';
@@ -10,47 +9,56 @@ import { Wallet, Money } from '../Deposit/styles'
 
 
 class Withdraw extends React.Component {
+    // state = {
+    //     user: {
+    //         balance: ""
+    //     },
+    //     errors: ""
+    // };
+
     state = {
-        user: {
-            balance: ""
+        withdrawValue: "",
+        idAccount: "",
+
+        account: {
+            balance: "",
+            user: {
+                name: ""
+            }
         },
         errors: ""
-    };
-
-    componentDidMount() {
-        axios
-            .get(`/accounts/${this.retrieveUserId()}`)
-            .then(({ data }) => {
-                this.setState({
-                    user: data
-                });
-            })
-            .catch(({ response }) => {
-                if (response.status === 404) {
-                    this.props.history.push("/not-found");
-                }
-            });
     }
 
-    retrieveUserId = () => this.props.match.params.id;
+    componentDidMount() {
+
+        const params = this.props.match.params
+
+        if (params.id) {
+            axios
+                .get(`/accounts/${params.id}`)
+                .then(({ data }) => {
+                    this.setState({
+                        idAccount: data.id,
+                        account: data
+                    });
+                })
+        }
+    }
+
+    // retrieveUserId = () => this.props.match.params.id;
 
     handleChange = event => {
         let field = event.target.name;
         let value = event.target.value;
 
-        this.setState(({ user }) => ({
-            user: {
-                ...user,
-                [field]: value
-            }
-        }));
+        this.setState({ [field]: value })
     };
 
     handleSubmit = event => {
         event.preventDefault();
 
         axios
-            .put(`/accounts/withdraw/${this.retrieveUserId()}`, this.state.user)
+            .post("/accounts/withdraw/", this.state)
             .then(() => this.props.history.push("/users"))
             .catch(({ response }) => {
                 console.log(response.data.message);
@@ -66,7 +74,10 @@ class Withdraw extends React.Component {
     };
 
     render() {
-        const { user, errors } = this.state;
+        const { withdrawValue } = this.state
+
+        const { balance } = this.state.account
+
         return (
             <Container>
                 <Title>Realizar Saque</Title>
@@ -75,8 +86,7 @@ class Withdraw extends React.Component {
                         <TextField
                             name="balance"
                             label="Saldo do cliente"
-                            value={user.balance}
-                            errors={errors["balance"]}
+                            value={balance}
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
@@ -91,7 +101,7 @@ class Withdraw extends React.Component {
                         <TextField
                             name="withdrawValue"
                             label="Valor do saque"
-                            errors={errors}
+                            value={withdrawValue}
                             onChange={this.handleChange}
                             InputProps={{
                                 startAdornment: (
@@ -103,8 +113,8 @@ class Withdraw extends React.Component {
                         />
                     </Input>
 
-                    <Button>
-                        <Link to="/users">Voltar</Link>
+                    <Button href="/users">
+                        Voltar
                     </Button>
                     <Button type="submit"
                         variant="contained"

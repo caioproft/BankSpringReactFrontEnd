@@ -7,52 +7,49 @@ import { Wallet, Money } from './styles'
 import Button from '@material-ui/core/Button';
 
 class Deposit extends React.Component {
+
     state = {
-        user: {
+        depositValue: "",
+        idAccount: "",
+
+        account: {
             balance: "",
-            depositValue: "",
-            idAccount: ""
+            user: {
+                name: ""
+            }
         },
         errors: ""
-    };
-
-    componentDidMount() {
-        axios
-            .get(`/accounts/${this.retrieveUserId()}`)
-            .then(({ data }) => {
-                this.setState({
-                    user: data
-                });
-            })
-            .catch(({ response }) => {
-                if (response.status === 404) {
-                    this.props.history.push("/not-found");
-                }
-            });
     }
 
-    retrieveUserId = () => this.props.match.params.id;
+    componentDidMount() {
+
+        const params = this.props.match.params
+        if (params.id) {
+            axios
+                .get(`/accounts/${params.id}`)
+                .then(({ data }) => {
+                    this.setState({
+                        idAccount: data.id,
+                        account: data
+                    });
+                })
+        }
+    }
 
     handleChange = event => {
         let field = event.target.name;
         let value = event.target.value;
 
-        this.setState(({ user }) => ({
-            user: {
-                ...user,
-                [field]: value
-            }
-        }));
+        this.setState({ [field]: value })
     };
 
     handleSubmit = event => {
         event.preventDefault();
 
         axios
-            .post(`/accounts/deposit/${this.retrieveUserId()}`, this.state.user)
+            .post("/accounts/deposit/", this.state)
             .then(() => this.props.history.push("/users"))
             .catch(({ response }) => {
-                console.log(response);
                 if (response.status === 400) {
                     this.setState({
                         errors: response.data
@@ -65,7 +62,11 @@ class Deposit extends React.Component {
     };
 
     render() {
-        const { user, errors } = this.state;
+
+        const { depositValue } = this.state
+
+        const { balance } = this.state.account
+
         return (
             <Container>
                 <Title>Realizar Depósito</Title>
@@ -74,8 +75,7 @@ class Deposit extends React.Component {
                         <TextField
                             name="balance"
                             label="Saldo do cliente"
-                            value={user.balance}
-                            errors={errors["balance"]}
+                            value={balance}
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
@@ -90,7 +90,7 @@ class Deposit extends React.Component {
                         <TextField
                             name="depositValue"
                             label="Valor do depósito"
-                            errors={errors}
+                            value={depositValue}
                             onChange={this.handleChange}
                             InputProps={{
                                 startAdornment: (
