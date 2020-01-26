@@ -2,36 +2,21 @@ import React from "react";
 import axios from "../../utils/httpClient";
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import { Container, Title, FormContainer, Input, Done } from '../EditUser/styles';
-import { Wallet, Money } from './styles'
 import Button from '@material-ui/core/Button';
+import { UserIcon, EmailIcon, Done, Container, Title, FormContainer, Input } from '../EditUser/styles';
 
-class Deposit extends React.Component {
+
+
+
+class NewUser extends React.Component {
     state = {
         user: {
-            balance: "",
-            depositValue: "",
-            idAccount: ""
+            name: "",
+            email: "",
         },
-        errors: ""
+        errors: {},
+        globalError: ""
     };
-
-    componentDidMount() {
-        axios
-            .get(`/accounts/${this.retrieveUserId()}`)
-            .then(({ data }) => {
-                this.setState({
-                    user: data
-                });
-            })
-            .catch(({ response }) => {
-                if (response.status === 404) {
-                    this.props.history.push("/not-found");
-                }
-            });
-    }
-
-    retrieveUserId = () => this.props.match.params.id;
 
     handleChange = event => {
         let field = event.target.name;
@@ -46,62 +31,63 @@ class Deposit extends React.Component {
     };
 
     handleSubmit = event => {
-        event.preventDefault();
-
         axios
-            .post(`/accounts/deposit/${this.retrieveUserId()}`, this.state.user)
+            .post("/users", this.state.user)
             .then(() => this.props.history.push("/users"))
             .catch(({ response }) => {
-                console.log(response);
                 if (response.status === 400) {
                     this.setState({
                         errors: response.data
                     });
                 }
                 this.setState({
-                    errors: response.data.message
+                    globalError: response.data.message
                 });
             });
+        event.preventDefault();
     };
 
     render() {
-        const { user, errors } = this.state;
+        const { user, errors, globalError } = this.state;
         return (
             <Container>
-                <Title>Realizar Depósito</Title>
+                <Title>Novo Cliente</Title>
+
+                {globalError ? <div>{globalError}</div> : <></>}
                 <FormContainer onSubmit={this.handleSubmit}>
                     <Input>
                         <TextField
-                            name="balance"
-                            label="Saldo do cliente"
-                            value={user.balance}
-                            errors={errors["balance"]}
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <Wallet />
-                                    </InputAdornment>
-                                ),
-                            }}
-                        />
-                    </Input>
-
-                    <Input>
-                        <TextField
-                            name="depositValue"
-                            label="Valor do depósito"
-                            errors={errors}
+                            name="name"
+                            label="Nome"
+                            value={user.name}
+                            errors={errors["name"]}
                             onChange={this.handleChange}
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
-                                        <Money />
+                                        <UserIcon />
                                     </InputAdornment>
                                 ),
                             }}
                         />
                     </Input>
 
+                    <Input>
+                        <TextField
+                            name="email"
+                            label="E-mail"
+                            value={user.email}
+                            erros={errors["email"]}
+                            onChange={this.handleChange}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <EmailIcon />
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                    </Input>
                     <Button
                         href="/users"
                         variant="contained">
@@ -111,11 +97,11 @@ class Deposit extends React.Component {
                         variant="contained"
                         startIcon={<Done />}
                         color="primary">
-                        Confirmar
+                        Cadastrar cliente
                     </Button>
                 </FormContainer>
             </Container>
         );
     }
 }
-export default Deposit;
+export default NewUser;

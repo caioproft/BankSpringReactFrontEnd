@@ -28,22 +28,23 @@ const useStyles = makeStyles({
         fontSize: 18,
         textAlign: 'center',
         marginTop: '30%',
+        color: 'red',
     },
 });
 
-export default function Welcome() {
+export default function NotFound() {
     const classes = useStyles();
 
     return (
         <div className={classes.container}>
             <Card className={classes.card}>
                 <CardContent>
-                    <Typography className={classes.title} color="initial" gutterBottom>
-                        Bem-vindo ao IncubaBank!
-        </Typography>
+                    <Typography className={classes.title} gutterBottom>
+                        A página acessada não existe ou foi alterada!
+                    </Typography>
                 </CardContent>
                 <ButtonContainer>
-                    <Button color="primary" size='large' href="/users" variant="contained">Entrar</Button>
+                    <Button color="default" size='large' href="/users" variant="contained">Home</Button>
                 </ButtonContainer>
             </Card>
         </div>

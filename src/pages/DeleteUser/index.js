@@ -2,23 +2,24 @@ import React from "react";
 import axios from "../../utils/httpClient";
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import { Container, Title, FormContainer, Input, Done } from '../EditUser/styles';
-import { Wallet, Money } from './styles'
+import { Delete } from './styles';
+import { UserIcon, EmailIcon, Container, Title, FormContainer, Input } from '../EditUser/styles';
 import Button from '@material-ui/core/Button';
 
-class Deposit extends React.Component {
+
+
+class EditUser extends React.Component {
     state = {
         user: {
-            balance: "",
-            depositValue: "",
-            idAccount: ""
+            name: "",
+            email: ""
         },
-        errors: ""
+        errors: {}
     };
 
     componentDidMount() {
         axios
-            .get(`/accounts/${this.retrieveUserId()}`)
+            .get(`/users/${this.retrieveUserId()}`)
             .then(({ data }) => {
                 this.setState({
                     user: data
@@ -33,53 +34,40 @@ class Deposit extends React.Component {
 
     retrieveUserId = () => this.props.match.params.id;
 
-    handleChange = event => {
-        let field = event.target.name;
-        let value = event.target.value;
 
-        this.setState(({ user }) => ({
-            user: {
-                ...user,
-                [field]: value
-            }
-        }));
-    };
-
-    handleSubmit = event => {
+    handleRemove = event => {
         event.preventDefault();
 
         axios
-            .post(`/accounts/deposit/${this.retrieveUserId()}`, this.state.user)
+            .delete(`/users/${this.retrieveUserId()}`)
             .then(() => this.props.history.push("/users"))
             .catch(({ response }) => {
-                console.log(response);
                 if (response.status === 400) {
                     this.setState({
                         errors: response.data
                     });
                 }
-                this.setState({
-                    errors: response.data.message
-                });
             });
     };
 
     render() {
         const { user, errors } = this.state;
+
         return (
             <Container>
-                <Title>Realizar Depósito</Title>
-                <FormContainer onSubmit={this.handleSubmit}>
+                <Title>Deseja excluir este cliente?</Title>
+
+                <FormContainer onSubmit={this.handleRemove}>
                     <Input>
                         <TextField
-                            name="balance"
-                            label="Saldo do cliente"
-                            value={user.balance}
-                            errors={errors["balance"]}
+                            name="name"
+                            label="Nome do cliente"
+                            value={user.name}
+                            errors={errors["name"]}
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
-                                        <Wallet />
+                                        <UserIcon />
                                     </InputAdornment>
                                 ),
                             }}
@@ -88,34 +76,34 @@ class Deposit extends React.Component {
 
                     <Input>
                         <TextField
-                            name="depositValue"
-                            label="Valor do depósito"
-                            errors={errors}
-                            onChange={this.handleChange}
+                            name="email"
+                            label="E-mail do cliente"
+                            value={user.email}
+                            errors={errors["email"]}
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
-                                        <Money />
+                                        <EmailIcon />
                                     </InputAdornment>
                                 ),
                             }}
                         />
                     </Input>
-
                     <Button
                         href="/users"
-                        variant="contained">
+                        variant="outlined"
+                        color="primary">
                         Voltar
                     </Button>
                     <Button type="submit"
                         variant="contained"
-                        startIcon={<Done />}
-                        color="primary">
-                        Confirmar
+                        startIcon={<Delete />}
+                        color="secondary">
+                        Excluir cliente
                     </Button>
                 </FormContainer>
             </Container>
         );
     }
 }
-export default Deposit;
+export default EditUser;

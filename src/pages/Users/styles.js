@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { AiFillDelete } from 'react-icons/ai';
 import { FaUserEdit } from 'react-icons/fa';
-import { GiPayMoney } from 'react-icons/gi';
-import { GiReceiveMoney } from 'react-icons/gi';
+import { GiPayMoney, GiReceiveMoney } from 'react-icons/gi';
+import { TiUserAdd } from 'react-icons/ti';
 
 
 export const Delete = styled(AiFillDelete)`
@@ -29,17 +29,16 @@ export const Withdraw = styled(GiReceiveMoney)`
     height: 30px;
 `;
 
+export const NewUser = styled(TiUserAdd)`
+    width: 30px;
+    height: 30px;
+`;
+
 export const Container = styled.div`
-  font-size: 17px;
-  padding: 20px 20px;
-  -webkit-align-items: flex-start;
-  -webkit-box-align: flex-start;
-  -ms-flex-align: flex-start;
-  align-items: flex-start;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
   text-align: center;
-  margin-top: 10px;
+  padding: 20px 20px;
+`;
+
+export const ButtonContainer = styled.div`
+    margin-top: 10px;
 `;

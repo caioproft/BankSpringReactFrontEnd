@@ -16,7 +16,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import axios from '../../utils/httpClient';
-import { Container, Delete, Edit, Deposit, Withdraw } from './styles';
+import { Container, ButtonContainer, Delete, Edit, Deposit, Withdraw, NewUser } from './styles';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
@@ -103,7 +103,7 @@ export default function Users() {
                                                 </Button>
                                             </TableCell>
                                             <TableCell align="left">
-                                                <Button>
+                                                <Button href={`/users/delete/${user.id}`}>
                                                     <Delete />
                                                 </Button>
                                             </TableCell>
@@ -140,6 +140,15 @@ export default function Users() {
                     />
                 </ThemeProvider>
             </Paper>
+            <ButtonContainer>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    href="/users/new"
+                    startIcon={<NewUser />}>
+                    Novo cliente
+            </Button>
+            </ButtonContainer>
         </Container>
     );
 }
